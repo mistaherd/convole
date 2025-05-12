@@ -14,4 +14,4 @@ clean:
 	del convole_encoder.exe
 	del convole_2D.exe
 	del convole.exe
-	del Overlap_and_save
+	del Overlap_and_save.exe
