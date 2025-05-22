@@ -1,17 +1,18 @@
 # Defult rule to build the target
-all:convole convole_2D convole_encoder Overlap_and_save
+all:convole_2D convole_encoder Overlap_and_save test
 
 # link object
-convole: convole.c
-	gcc  convole.c -o convole
+convole.o: convole.c convole.h
+	gcc -c convole.c -o convole.o
+zeropad.o: zeropad.c zeropad.h
+	gcc -c zeropad.c -o zeropad.o
 convole_2D: convole_2D.c
 	gcc convole_2D.c -o convole_2D
 convole_encoder:convoletional_encoder.c
-	gcc  convoletional_encoder.c -o convole_encoder 
-Overlap_and_save:Overlap_and_save.c
-	gcc Overlap_and_save.c -o Overlap_and_save
+	gcc convoletional_encoder.c -o convoletional_encoder 
+Overlap_and_save:Overlap_and_save.c convole.o zeropad.o
+	gcc Overlap_and_save.c convole.o zeropad.o -o Overlap_and_save
+test: test.c
+	gcc test.c -o Test
 clean:
-	del convole_encoder.exe
-	del convole_2D.exe
-	del convole.exe
-	del Overlap_and_save.exe
+	del /Q *.o *.exe 2>nul || true
