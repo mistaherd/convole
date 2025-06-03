@@ -95,7 +95,33 @@ int* indexing(int *input,int from,int to){
 			buffer[i]=input[from+i];
 		}
 	return buffer;
-} 
+}
+int *zeropad(int *Input_array,int pad_width,int chunk_size){
+	int temp_size=pad_width*2+chunk_size;
+
+	int *temp=(int *)calloc(temp_size,sizeof(int));
+	assert(temp !=NULL&& "Memory allocation failed when allocateing memory for zeropad\n");
+
+	for(int i=pad_width;i<temp_size-pad_width;i++){
+		temp[i]=Input_array[i-pad_width];
+	
+	}
+	int last_el=temp_size-1;
+	temp[last_el]=0;
+	return temp;
+}
+void convole(int *xn,int len_x,int *hn,int len_h,int y[],int len_y){
+	for(int n=0;n<len_y;n++){
+		y[n]=0;
+		for (int k=0;k<len_h;k++){
+			if(n-k>=0&& n-k<len_x){
+				y[n]+=xn[n-k]*hn[k];
+			}
+		}
+		
+	}
+}
+
 int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_window,int Num_of_overlap){
 	// padded input to incate the start and stop of the data recivied
 	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
