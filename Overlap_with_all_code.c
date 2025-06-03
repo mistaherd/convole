@@ -3,13 +3,12 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "convole.h"
-#include "zeropad.h"
-#include "Indexing.h"
+
 int * overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size ,int context_window,int Num_of_overlap);
 int *concatenate(int **arr1, int number_of_arrays, int size_of_array_inside);
-
-
+void convole(int xn[],int len_x,int hn[] ,int len_h,int y[],int len_y);
+int *zeropad(int *Input_array,int pad_width,int chunk_size);
+int* indexing(int *input,int from,int to);
 int main(){
 	//set the value we want our vhunk we perofrm overlapand save on
 	int chunk_size=0xF;
@@ -88,7 +87,15 @@ int *concatenate(int **arr1,int number_of_arrays,int size_of_array_inside){
 	return res;
 }
 
-  
+int* indexing(int *input,int from,int to){
+	int size=to-from;
+	int *buffer=(int *)calloc(size, sizeof(int));
+	assert(buffer!=NULL &&"memory allocation failed when indexing\n");
+	for (int i=0;i<size;i++){
+			buffer[i]=input[from+i];
+		}
+	return buffer;
+} 
 int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_window,int Num_of_overlap){
 	// padded input to incate the start and stop of the data recivied
 	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
@@ -172,3 +179,4 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 	free(padded_xn);
 	return output;
 }
+
