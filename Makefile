@@ -17,5 +17,7 @@ convole_encoder:convoletional_encoder.c
 Overlap_and_save:Overlap_and_save.c convole.o zeropad.o Indexing.o
 	gcc Overlap_and_save.c convole.o zeropad.o Indexing.o -o Overlap_and_save
 
+Overlap_and_save_no_headers:Overlap_with_all_code.c
+	gcc Overlap_with_all_code.c -o Overlap_with_all_code
 clean:
 	del /Q *.o *.exe 2>nul || true

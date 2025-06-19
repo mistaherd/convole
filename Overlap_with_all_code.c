@@ -34,7 +34,7 @@ int main(){
 	convole(xn,context_window,hn,hn_len,output,len_y);
 	int *y=overlap_and_save(xn,hn,hn_len,chunk_size,context_window,number_of_overlap);
 	assert(y!=NULL&&"Overlap and save failed");
-	printf("\n\r Output of overlap and save:\n");
+	printf("\n\rOutput of overlap and save:\n");
 	for(int i=0;i<context_window;i++){
 		if (i==0){
 			printf("[%d,",y[i]);
@@ -47,7 +47,7 @@ int main(){
 			printf("%d,",y[i]);
 		}
 	}
-	printf("\n\r Output of overlap and save:\n");
+
 	printf("\n\rPerfect convole:\n");
 	for(int i=0;i<context_window;i++){
 		if (i==0){
@@ -91,8 +91,10 @@ int* indexing(int *input,int from,int to){
 	int size=to-from;
 	int *buffer=(int *)calloc(size, sizeof(int));
 	assert(buffer!=NULL &&"memory allocation failed when indexing\n");
+	
 	for (int i=0;i<size;i++){
 			buffer[i]=input[from+i];
+			
 		}
 	return buffer;
 }
@@ -127,6 +129,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
 	
 	int padded_len=context_window+2*Num_of_overlap;
+	/*
 	printf("padded array:\n");	
 	for(int i=0;i<padded_len;i++){
 		if (i==0){
@@ -139,7 +142,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 			printf("%d,",padded_xn[i]);
 		}
 	}
-	
+	*/
 	// round up the the legnth of the pad divied by chunks size to control how many iterations the foor loop will go
 	int buffer_size=round(padded_len/chunk_size);
 	// allocate memory for an array of arrays
@@ -155,12 +158,12 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 		//printf("from =%d,to=%d,i=%d\n",from,to,i);
 		int *Input_to_be_convoled=indexing(padded_xn,from,to);
 		assert(Input_to_be_convoled!=NULL&&"failed to allocate memory in indexing");
-		
+		/*	
 		printf("\n Index array:\n");
 		for(int j=0;j<chunk_size;j++){
 			printf("%d,",Input_to_be_convoled[j]);
 		}
-		
+		*/
 
 
 		int *convole_output=(int *)malloc(convole_output_len * sizeof(int));
@@ -195,7 +198,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 
 	}
 
-	int *output=indexing(concaenated_array,Num_of_overlap,context_window-Num_of_overlap);
+	int *output=indexing(concaenated_array,Num_of_overlap,buffer_size*convole_output_len-Num_of_overlap);
 
 	for(int i=0;i<buffer_size;i++){
 		free(buffer[i]);
