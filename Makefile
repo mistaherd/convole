@@ -1,6 +1,5 @@
 # Defult rule to build the target
-all:convole_2D convole_encoder Overlap_and_save 
-
+all:convole_2D convole_encoder Overlap_and_save  Overlap_and_save_no_headers
 # link object
 convole.o: convole.c convole.h
 	gcc -c convole.c -o convole.o

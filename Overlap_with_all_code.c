@@ -184,6 +184,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 	}
 	int *concaenated_array=concatenate(buffer,buffer_size,convole_output_len);
 	assert(concaenated_array!=NULL&&"failed to make concated_array");
+	/*
 	printf("\nConcaenated array:\n");
 	for(int i=0;i<buffer_size*convole_output_len;i++){
 		if (i==0){
@@ -197,7 +198,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 		}
 
 	}
-
+	*/
 	int *output=indexing(concaenated_array,Num_of_overlap,buffer_size*convole_output_len-Num_of_overlap);
 
 	for(int i=0;i<buffer_size;i++){
