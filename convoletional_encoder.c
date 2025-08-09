@@ -5,7 +5,6 @@ int main(){
 	int shift_reg=0b000;
 	int len_of_in=sizeof(encoder_in);
 	int lsb;
-
 	int a;
 	int b;
 	
