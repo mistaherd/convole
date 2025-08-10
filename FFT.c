@@ -1,6 +1,7 @@
 #include <math.h>
 #include <complex.h>
 #include <stdio.h>
+#include <assert.h>
 #include <stdlib.h>
 #include <xmmintrin.h>
 typedef float f32;
@@ -12,15 +13,22 @@ void dft_sse(const f32 *x,complexf32 *y,int N);
 int main(){
 	int input_size=0xFF;
 	int seed=7;
-	f32 *input=(f32 *)malloc(N*sizeof(f32));
-	complexf32 *y=(complexf32 *)malloc(N*sizeof(complexf32));
+	f32 *input=(f32 *)malloc(input_size*sizeof(f32));
+	assert(input!=NULL&&"memory allocation for input failed");
+	complexf32 *y=(complexf32 *)malloc(input_size*sizeof(complexf32));
+	assert(y!=NULL&&"memory allocation for output has  failed");	
 	srand(seed);
 	for(int n=0;n<input_size;n++){
 		input[n]=rand()%100;
 	}
 	dft_sse(input,y,input_size);
 	
+	for (int i=0;i<input_size;i++){
+		printf("y[%d]=%.5f +%.5fi\n",i,y[i].re,y[i].im);
+	}
 	free(input);
+
+	free(output);
 	return 0;
 }
 
