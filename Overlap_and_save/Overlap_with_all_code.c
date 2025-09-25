@@ -129,21 +129,7 @@ int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_win
 	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
 	
 	int padded_len=context_window+2*Num_of_overlap;
-	/*
-	printf("padded array:\n");	
-	for(int i=0;i<padded_len;i++){
-		if (i==0){
-			printf("[%d,",padded_xn[i]);
-		}
-		else if(i==padded_len-1){
-			printf("%d]\n\n",padded_xn[i]);
-		}
-		else{
-			printf("%d,",padded_xn[i]);
-		}
-	}
-	*/
-	// round up the the legnth of the pad divied by chunks size to control how many iterations the foor loop will go
+// round up the the legnth of the pad divied by chunks size to control how many iterations the foor loop will go
 	int buffer_size=round(padded_len/chunk_size);
 	// allocate memory for an array of arrays
 	int **buffer=(int **)malloc(buffer_size*sizeof(int*));
