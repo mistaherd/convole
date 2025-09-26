@@ -32,7 +32,9 @@ int main(){
 	int *output=(int *)malloc(len_y*sizeof(int));
 	
 	convole(xn,context_window,hn,hn_len,output,len_y);
-	int *y=overlap_and_save(xn,hn,hn_len,chunk_size,context_window,number_of_overlap);
+	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
+	free(xn);
+	int *y=overlap_and_save(padded_xn,hn,hn_len,chunk_size,context_window,number_of_overlap);
 	assert(y!=NULL&&"Overlap and save failed");
 	printf("\n\rOutput of overlap and save:\n");
 	for(int i=0;i<context_window;i++){
@@ -64,7 +66,6 @@ int main(){
 	
 		free(output);
 	free(y);
-	free(xn);
 	return 0;
 }
 
@@ -124,9 +125,9 @@ void convole(int *xn,int len_x,int *hn,int len_h,int y[],int len_y){
 	}
 }
 
-int *overlap_and_save(int *xn,int hn[],int hn_len,int chunk_size,int context_window,int Num_of_overlap){
+int *overlap_and_save(int *padded_xn,int hn[],int hn_len,int chunk_size,int context_window,int Num_of_overlap){
 	// padded input to incate the start and stop of the data recivied
-	int *padded_xn=zeropad(xn,Num_of_overlap,context_window);
+
 	
 	int padded_len=context_window+2*Num_of_overlap;
 // round up the the legnth of the pad divied by chunks size to control how many iterations the foor loop will go
